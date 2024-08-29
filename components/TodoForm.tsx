@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Form,
+  Form,
   FormControl,
   FormField,
   FormItem,
@@ -13,27 +13,41 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 type TodoFormProps = {
+  data?: Todo;
   onSubmit: (data: CreateTodo) => void;
 };
 
 const TodoForm: FC<TodoFormProps> = (props) => {
   const formSchema = z.object({
+    id: z.string().optional(),
     title: z.string().min(2, {
       message: "Title must be at least 2 characters.",
     }),
     description: z.string(),
+    completed: z.boolean().optional(),
   });
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-    },
+    defaultValues: props.data
+      ? {
+          ...props.data,
+        }
+      : {
+          title: "",
+          description: "",
+        },
   });
+
+  useEffect(() => {
+    if (props.data && props.data.id) {
+      form.setValue("id", props.data.id);
+      form.setValue("completed", props.data.completed);
+    }
+  }, [props.data]);
 
   const onSubmit = (data: any) => {
     props.onSubmit(data);

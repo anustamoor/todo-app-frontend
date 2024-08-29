@@ -12,6 +12,12 @@ declare type TodoCardProps = {
 };
 
 declare type CreateTodo = {
+  id?: string;
   title: string;
   description: string;
+  completed?: boolean;
 };
+
+declare type EditProps = {
+  data: Todo
+}

@@ -71,6 +71,34 @@ export const createTodo = async (payload: CreateTodo) => {
   }
 };
 
+export const editTodo = async (payload: CreateTodo) => {
+  try {
+    const response = await fetch(`http://localhost:5000/todos/${payload.id || ""}`, {
+      mode: "cors",
+      cache: "no-store",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: payload.title,
+        description: payload.description,
+        completed: payload.completed,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || "Failed to edit todo");
+    }
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message || "Failed to edit todo");
+  }
+};
+
 export const deleteTodo = async (id: string) => {
   try {
     const response = await fetch(`http://localhost:5000/todos/${id}`, {

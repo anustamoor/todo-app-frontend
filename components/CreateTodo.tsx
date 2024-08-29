@@ -16,7 +16,7 @@ const CreateTodo = () => {
   const mutationCreateTodo = useMutation({
     mutationFn: createTodo,
     onSuccess: (resp) => {
-      queryClient.refetchQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
       toast({
         variant: "default",
         title: "Todo added",

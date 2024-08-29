@@ -20,12 +20,12 @@ const TodoList = () => {
 
   const mutationComplete = useMutation({
     mutationFn: completeTodo,
-    onSuccess: (resp) => {
+    onSuccess: (resp, data) => {
       3;
-      queryClient.refetchQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
       toast({
         variant: "default",
-        title: "Todo added",
+        title: `Todo ${data.completed ? "Completed" : "Uncompleted"}`,
         description: resp.message,
         duration: 3000,
       });
@@ -44,10 +44,10 @@ const TodoList = () => {
     mutationFn: deleteTodo,
     onSuccess: (resp) => {
       3;
-      queryClient.refetchQueries({ queryKey: ["todos"] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
       toast({
         variant: "default",
-        title: "Todo added",
+        title: "Todo Deleted",
         description: resp.message,
         duration: 3000,
       });

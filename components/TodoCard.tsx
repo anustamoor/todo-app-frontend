@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { EditTodo } from "./EditTodo";
 
 const TodoCard: FC<TodoCardProps> = ({ details, onDelete, onComplete }) => {
   const { id, title, description, completed } = details;
@@ -32,6 +33,7 @@ const TodoCard: FC<TodoCardProps> = ({ details, onDelete, onComplete }) => {
           >
             {completed ? "Uncomplete" : "Complete"}
           </Button>
+          <EditTodo data={details} />
         </CardFooter>
       </CardHeader>
     </Card>
